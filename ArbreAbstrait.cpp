@@ -278,5 +278,5 @@ int NoeudInstLire::executer() {
 }
 
 void NoeudInstLire::traduitEnCPP(ostream& cout, unsigned int indentation) const {
-    cout << "traduction pas encore faite Lire";
+    cout << ((SymboleValue*)p)->getChaine();
 }
