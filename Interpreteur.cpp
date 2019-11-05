@@ -72,7 +72,7 @@ Noeud* Interpreteur::inst() {
         testerEtAvancer(";");
         return affect;
     } else if (m_lecteur.getSymbole() == "si")
-        return instSi();
+        return instSiRiche();
     else if (m_lecteur.getSymbole() == "tantque")
         return instTantQue();
     else if (m_lecteur.getSymbole() == "repeter")
@@ -91,7 +91,7 @@ Noeud* Interpreteur::inst() {
 }
 
 Noeud* Interpreteur::affectation() {
-    // <affectation> ::= <variable> = <expression> 
+    // <affectation> ::= <variable> = <expression>
     tester("<VARIABLE>");
     Noeud* var = m_table.chercheAjoute(m_lecteur.getSymbole()); // La variable est ajoutée à la table eton la mémorise
     m_lecteur.avancer();
@@ -174,7 +174,7 @@ Noeud* Interpreteur::instSiRiche() {
     testerEtAvancer(")");
     Noeud* sequence = seqInst(); // On mémorise la séquence d'instruction
     sequences.push_back(sequence);
-    
+
     while (m_lecteur.getSymbole()=="sinonsi") {
     m_lecteur.avancer();
     testerEtAvancer("(");
@@ -205,25 +205,25 @@ Noeud* Interpreteur::instRepeter() {
 }
 
 Noeud* Interpreteur::instPour() {
-    // <instPour> ::= pour( [ <affectation> ] ; <expression> ;[ <affectation> ]) <seqInst> finpour  
+    // <instPour> ::= pour( [ <affectation> ] ; <expression> ;[ <affectation> ]) <seqInst> finpour
     Noeud* affectation1 = nullptr;
     Noeud* affectation2 = nullptr;
-    
-    
+
+
     testerEtAvancer("pour");
     testerEtAvancer("(");
     if (m_lecteur.getSymbole() == "<VARIABLE>") {
         m_lecteur.avancer();
         affectation1 = affectation();
         m_lecteur.avancer();
-        testerEtAvancer(";");     
-    }    
-    
+        testerEtAvancer(";");
+    }
+
     Noeud* condition1 = expression();
     m_lecteur.avancer();
     if (m_lecteur.getSymbole() != ")") {
-        testerEtAvancer(";");        
-        affectation2 = affectation();     
+        testerEtAvancer(";");
+        affectation2 = affectation();
     }
     testerEtAvancer(")");
     Noeud* sequence = seqInst();
@@ -268,7 +268,7 @@ testerEtAvancer("lire");
     vector <Noeud*> v;
     v.push_back(m_table.chercheAjoute(m_lecteur.getSymbole()));
     m_lecteur.avancer();
-    
+
     while (m_lecteur.getSymbole() == ",") {
         m_lecteur.avancer();
         v.push_back(m_table.chercheAjoute(m_lecteur.getSymbole()));
@@ -276,15 +276,15 @@ testerEtAvancer("lire");
 
     }
     testerEtAvancer(")");
-    
+
    return new NoeudInstLire(v);
 }
 
 void Interpreteur::traduitEnCPP(ostream & cout,unsigned int indentation)const{
-    
+
  cout << setw(4*indentation)<<""<<"int main() {"<< endl;
  getArbre()->traduitEnCPP(cout,indentation+1);
  cout << setw(4*(indentation+1))<<""<<"return 0;"<< endl ;
  cout << setw(4*indentation)<<"}" << endl ;
- 
-} 
+
+}

@@ -44,10 +44,10 @@ int NoeudAffectation::executer() {
 }
 
 void NoeudAffectation::traduitEnCPP(ostream& cout, unsigned int indentation) const {
-    cout << setw(4*(indentation)) << " " ;
+    cout << setw(4*(indentation+2)) << " " ;
     m_variable->traduitEnCPP(cout,0);
     cout <<" = ";
-    m_expression->traduitEnCPP(cout,0); cout << ";"endl;
+    m_expression->traduitEnCPP(cout,0); cout << ";" << endl;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -101,11 +101,11 @@ int NoeudInstSi::executer() {
     return 0; // La valeur renvoyée ne représente rien !
 }
 void NoeudInstSi::traduitEnCPP(ostream& cout, unsigned int indentation) const {
-    cout << setw(4 * indentation) << ""<<"if (";
+    cout << setw(4 * (indentation+2)) << " " <<"if (";
     m_condition->traduitEnCPP(cout,0);
     cout << ") {"<<endl;
-    m_sequence->traduitEnCPP(cout,indentation+1);
-    cout << setw(4 * indentation) << ""<<"}" << endl;
+    cout << setw(4 * (indentation+1)) << ""; m_sequence->traduitEnCPP(cout,indentation);
+    cout << setw(4 * (indentation+2)) << ""<<"}" << endl;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -122,11 +122,11 @@ int NoeudInstTantQue::executer() {
 }
 
 void NoeudInstTantQue::traduitEnCPP(ostream& cout, unsigned int indentation) const {
-    cout << setw(4 * indentation) << ""<<"while (";
+    cout << setw(4 * (indentation+2)) << ""<<"while (";
     m_condition->traduitEnCPP(cout,0);
     cout << ") {"<<endl;
-    m_sequence->traduitEnCPP(cout,indentation+1);
-    cout << setw(4 * indentation) << ""<<"}" << endl;
+    cout << setw(4 * (indentation+1)) << "";m_sequence->traduitEnCPP(cout,indentation+1);
+    cout << setw(4 * (indentation+2)) << ""<<"}" << endl;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -155,26 +155,26 @@ int NoeudInstSiRiche::executer() {
 }
 
 void NoeudInstSiRiche::traduitEnCPP(ostream& cout, unsigned int indentation) const {
-  //IF
+  int i = 0;
   for (Noeud * uneCondition : m_expressions){
     if (i == 0){
-      cout << setw(4 * indentation) << ""<<"if (";
+      cout << setw(4 * (indentation+2)) << ""<<"if (";
       uneCondition->traduitEnCPP(cout,indentation);
       cout << ") {"<<endl;
     }
     else if (m_expressions.size()==2){
-      cout << setw(4 * indentation) << ""<<"else (";
+      cout << setw(4 * (indentation+2)) << ""<<"else (";
       uneCondition->traduitEnCPP(cout,indentation);
       cout << ") {"<<endl;
     }
-  else {
-    cout << setw(4 * indentation) << ""<<"else if (";
-    m_condition->traduitEnCPP(cout,indentation);
-    cout << ") {"<<endl;
-  }
-  m_sequences[i]->traduitEnCPP(cout,indentation+1);
-  cout << setw(4 * indentation) << ""<<"}" << endl;
-  i++;
+    else {
+        cout << setw(4 * (indentation+2)) << ""<<"else if (";
+        uneCondition->traduitEnCPP(cout,indentation);
+        cout << ") {"<<endl;
+    }
+    cout << setw(4 * (indentation+1)) << "";m_sequences[i]->traduitEnCPP(cout,indentation);
+    cout << setw(4 * (indentation+2)) << ""<<"}" << endl;
+    i++;
   }
 }
 
@@ -196,11 +196,13 @@ int NoeudInstRepeter::executer() {
 }
 
 void NoeudInstRepeter::traduitEnCPP(ostream& cout, unsigned int indentation) const {
-    cout << setw(4 * indentation) << ""<<"do{";
-    m_sequence->traduitEnCPP(cout,indentation+1);
-    cout << "} while (";
+    cout << setw(4 * (indentation+2)) << "" <<"do {" << endl;
+    cout << setw(4 * (indentation+1)) << "";
+    m_sequence->traduitEnCPP(cout,indentation);
+    cout << setw(4 * (indentation+2)) << "" << "}" << endl;
+    cout << setw(4 * (indentation+2)) << "" <<"while ( ";
     m_condition->traduitEnCPP(cout,0);
-    cout << setw(4 * indentation) << ""<<")" << endl;
+    cout << " );" << endl;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -278,5 +280,5 @@ int NoeudInstLire::executer() {
 }
 
 void NoeudInstLire::traduitEnCPP(ostream& cout, unsigned int indentation) const {
-    cout << ((SymboleValue*)p)->getChaine();
+//    cout << ((SymboleValue*)p)->getChaine();
 }
