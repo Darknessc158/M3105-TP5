@@ -213,14 +213,11 @@ Noeud* Interpreteur::instPour() {
     testerEtAvancer("pour");
     testerEtAvancer("(");
     if (m_lecteur.getSymbole() == "<VARIABLE>") {
-        m_lecteur.avancer();
+        //m_lecteur.avancer(); //il faudrait avancer pour voir si c'est bien un égal.
         affectation1 = affectation();
-        m_lecteur.avancer();
         testerEtAvancer(";");
-    }
-
+    }    
     Noeud* condition1 = expression();
-    m_lecteur.avancer();
     if (m_lecteur.getSymbole() != ")") {
         testerEtAvancer(";");
         affectation2 = affectation();

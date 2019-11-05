@@ -221,15 +221,16 @@ int NoeudInstPour::executer() {
 }
 
 void NoeudInstPour::traduitEnCPP(ostream& cout, unsigned int indentation) const {
-    cout << setw(4 * indentation) << ""<<"for (";
+    cout << setw(4 * (indentation+2)) << ""<<"for (";
     m_affectation1->traduitEnCPP(cout,0);
     cout << ";";
     m_condition->traduitEnCPP(cout,0);
     cout << ";";
     m_affectation2->traduitEnCPP(cout,0);
     cout << ") {";
-    m_sequence->traduitEnCPP(cout,indentation+1);
-    cout << setw(4 * indentation) << ""<<"}" << endl;
+    cout << setw(4 * (indentation+1)) << "";
+    m_sequence->traduitEnCPP(cout,indentation);
+    cout << setw(4 * (indentation+2)) << "" <<"}" << endl;
 }
 ////////////////////////////////////////////////////////////////////////////////
 // NoeudInstEcrire
