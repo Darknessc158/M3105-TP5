@@ -156,23 +156,26 @@ int NoeudInstSiRiche::executer() {
 
 void NoeudInstSiRiche::traduitEnCPP(ostream& cout, unsigned int indentation) const {
   //IF
-  cout << setw(4 * indentation) << ""<<"if (";
-  m_condition->traduitEnCPP(cout,indentation);
-  cout << ") {"<<endl;
-  m_sequence->traduitEnCPP(cout,indentation+1);
+  for (Noeud * uneCondition : m_expressions){
+    if (i == 0){
+      cout << setw(4 * indentation) << ""<<"if (";
+      uneCondition->traduitEnCPP(cout,indentation);
+      cout << ") {"<<endl;
+    }
+    else if (m_expressions.size()==2){
+      cout << setw(4 * indentation) << ""<<"else (";
+      uneCondition->traduitEnCPP(cout,indentation);
+      cout << ") {"<<endl;
+    }
+  else {
+    cout << setw(4 * indentation) << ""<<"else if (";
+    m_condition->traduitEnCPP(cout,indentation);
+    cout << ") {"<<endl;
+  }
+  m_sequences[i]->traduitEnCPP(cout,indentation+1);
   cout << setw(4 * indentation) << ""<<"}" << endl;
-  //ELSEIF
-  cout << setw(4 * indentation) << ""<<"else if (";
-  m_condition->traduitEnCPP(cout,indentation);
-  cout << ") {"<<endl;
-  m_sequence->traduitEnCPP(cout,indentation+1);
-  cout << setw(4 * indentation) << ""<<"}" << endl;
-  //ELSE
-  cout << setw(4 * indentation) << ""<<"else (";
-  m_condition->traduitEnCPP(cout,indentation);
-  cout << ") {"<<endl;
-  m_sequence->traduitEnCPP(cout,indentation+1);
-  cout << setw(4 * indentation) << ""<<"}" << endl;
+  i++;
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
