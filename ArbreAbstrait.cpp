@@ -254,7 +254,7 @@ int NoeudInstEcrire::executer() {
 }
 
 void NoeudInstEcrire::traduitEnCPP(ostream& cout, unsigned int indentation) const {
-    cout << "traduction pas encore faite Ecrire";
+    cout << m_chaineouexpr
 }
 
 ////////////////////////////////////////////////////////////////////////////////
