@@ -26,7 +26,7 @@ void NoeudSeqInst::ajoute(Noeud* instruction) {
 void NoeudSeqInst::traduitEnCPP(ostream& cout, unsigned int indentation) const {
     for (unsigned int i = 0; i < m_instructions.size(); i++)
         m_instructions[i]->traduitEnCPP(cout,0); // on exécute chaque instruction de la séquence
-   
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -45,9 +45,9 @@ int NoeudAffectation::executer() {
 
 void NoeudAffectation::traduitEnCPP(ostream& cout, unsigned int indentation) const {
     cout << setw(4*(indentation)) << " " ;
-    m_variable->traduitEnCPP(cout,0); cout << " ";
-    cout <<"=";T
-    m_expression->traduitEnCPP(cout,0); cout << endl;
+    m_variable->traduitEnCPP(cout,0);
+    cout <<" = ";
+    m_expression->traduitEnCPP(cout,0); cout << ";"endl;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -155,7 +155,24 @@ int NoeudInstSiRiche::executer() {
 }
 
 void NoeudInstSiRiche::traduitEnCPP(ostream& cout, unsigned int indentation) const {
-    cout << "traduction pas encore faite-SiRiche";
+  //IF
+  cout << setw(4 * indentation) << ""<<"if (";
+  m_condition->traduitEnCPP(cout,indentation);
+  cout << ") {"<<endl;
+  m_sequence->traduitEnCPP(cout,indentation+1);
+  cout << setw(4 * indentation) << ""<<"}" << endl;
+  //ELSEIF
+  cout << setw(4 * indentation) << ""<<"else if (";
+  m_condition->traduitEnCPP(cout,indentation);
+  cout << ") {"<<endl;
+  m_sequence->traduitEnCPP(cout,indentation+1);
+  cout << setw(4 * indentation) << ""<<"}" << endl;
+  //ELSE
+  cout << setw(4 * indentation) << ""<<"else (";
+  m_condition->traduitEnCPP(cout,indentation);
+  cout << ") {"<<endl;
+  m_sequence->traduitEnCPP(cout,indentation+1);
+  cout << setw(4 * indentation) << ""<<"}" << endl;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -218,7 +235,7 @@ int NoeudInstEcrire::executer() {
         }else {
             cout << p->executer();
         }
-    
+
     }
     return 0; // La valeur renvoyée ne représente rien !
 }
@@ -238,13 +255,13 @@ NoeudInstLire::NoeudInstLire(vector<Noeud * > variable)
 int NoeudInstLire::executer() {
     string s ;
     for(auto p : m_variable){
-       
+
         if ( (typeid(*p)==typeid(SymboleValue) &&  *((SymboleValue*)p)== "<VARIABLE>")){
             int valvar;
             cin>>valvar;
             ((SymboleValue*)p)->setValeur(valvar);
         }
-    
+
     }
     return 0; // La valeur renvoyée ne représente rien !
 }
