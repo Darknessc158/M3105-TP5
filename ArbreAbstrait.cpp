@@ -176,7 +176,11 @@ int NoeudInstRepeter::executer() {
 }
 
 void NoeudInstRepeter::traduitEnCPP(ostream& cout, unsigned int indentation) const {
-    cout << "traduction pas encore faite repeter";
+    cout << setw(4 * indentation) << ""<<"do{";
+    m_sequence->traduitEnCPP(cout,indentation+1);
+    cout << "} while (";
+    m_condition->traduitEnCPP(cout,0);
+    cout << setw(4 * indentation) << ""<<")" << endl;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
