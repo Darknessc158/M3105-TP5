@@ -1,0 +1,3 @@
+procedure principale()
+    i = 5;
+finproc   

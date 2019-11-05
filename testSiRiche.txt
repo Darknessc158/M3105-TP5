@@ -1,0 +1,49 @@
+#test1 // test sur si
+procedure principale() 
+    i=0;
+    si (i==0)
+        i=i+1;
+    sinonsi(i>10)
+        i = 50;
+    sinon
+        i=100;
+    finsi
+    testSiRicheFait = (i==1);
+    
+#test2 // test sur 1 sinonsi
+    i=11;
+    si (i!=0)
+        i=i+1;
+    sinonsi(i>10)
+        i = 50;
+    sinon
+        i=100;
+    finsi
+    testSiRicheFait = (i==50);
+    
+#test3 // test sur le 2eme sinonsi
+    i=0;
+    si (i!=0)
+        i=i+1;
+    sinonsi(i>10)
+        i = 50;
+    sinonsi(i==0)
+        i = 70;
+    sinon
+        i=100;
+    finsi
+    testSiRicheFait = (i==70);
+    
+#test4 // test sur le sinon
+    i=0;
+    si (i!=0)
+        i=i+1;
+    sinonsi(i>10)
+        i = 50;
+    sinonsi(i==20)
+        i = 70;
+    sinon
+        i=100;
+    finsi
+    testSiRicheFait = (i==100);
+finproc

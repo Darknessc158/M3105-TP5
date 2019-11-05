@@ -1,0 +1,13 @@
+#test1
+procedure principale()
+    i=0;
+    tantque (i <10)
+        i = i+1;
+    fintantque
+    testTantQueFait = (i==10);
+#test2
+    testTantQueFait=1;
+    tantque(0)
+        testTantQuePasFait = 0;
+    fintantque
+finproc

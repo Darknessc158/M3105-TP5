@@ -1,0 +1,21 @@
+#test1
+procedure principale()
+x=0;
+lire(x)
+testInstLireFait = (x==10);
+
+#test2
+x=0;
+lire(x)
+testInstLireFait = (x==0);
+
+#test3
+x=0;
+i=10;
+j=20;
+lire(x,i,j)
+testInstLireFait = (x==10);
+testInstLireFait = (i==10);
+testInstLireFait = (j==10);
+
+finproc

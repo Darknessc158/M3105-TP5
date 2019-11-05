@@ -1,0 +1,8 @@
+#test1
+procedure principale()
+i=0;
+repeter
+    i=i+1;
+jusqua (i ==10)
+testInstRepeterFait = (i==10);
+finproc
