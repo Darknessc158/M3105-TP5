@@ -252,7 +252,10 @@ int NoeudInstEcrire::executer() {
 }
 
 void NoeudInstEcrire::traduitEnCPP(ostream& cout, unsigned int indentation) const {
-    cout << m_chaineouexpr
+    for(Noeud noeud : m_chaineouexpr){
+    noeud.traduitEnCPP(cout,0);
+    }
+    
 }
 
 ////////////////////////////////////////////////////////////////////////////////
