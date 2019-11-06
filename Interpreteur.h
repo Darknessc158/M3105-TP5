@@ -30,7 +30,11 @@ private:
     Noeud*  seqInst();	   //     <seqInst> ::= <inst> { <inst> }
     Noeud*  inst();	       //        <inst> ::= <affectation> ; | <instSi>
     Noeud*  affectation(); // <affectation> ::= <variable> = <expression> 
-    Noeud*  expression();  //  <expression> ::= <facteur> { <opBinaire> <facteur> }
+    Noeud*  expression();  //  <expression> ::= <expEt> {ou <expEt> }                   
+    Noeud*  expEt();        //    <expEt> ::= <expComp> {et <expComp> } 
+    Noeud*  expComp();    //    <expComp> ::= <expAdd> {==|!=|<|<=|>|>= <expAdd> }
+    Noeud*  expAdd();       //    <expAdd> ::= <expMult> {+|-<expMult> }
+    Noeud*  expMult();      //    <expMult>::= <facteur> {*|/<facteur> } 
     Noeud*  facteur();     //     <facteur> ::= <entier>  |  <variable>  |  - <facteur>  | non <facteur> | ( <expression> )
                            //   <opBinaire> ::= + | - | *  | / | < | > | <= | >= | == | != | et | ou
     Noeud*  instRepeter();      //  <instRepeter> ::=repeter <seqInst> jusqua( <expression> )
@@ -40,6 +44,7 @@ private:
     Noeud* instPour(); // <instPour> ::= pour( [ <affectation> ] ; <expression> ;[ <affectation> ]) <seqInst> finpour
     Noeud* instEcrire(); // <instEcrire>  ::=ecrire( <expression> | <chaine> {, <expression> | <chaine> })
     Noeud* instLire(); //   <instLire>::=lire( <variable> {, <variable> })
+    
 
     //testInstLire.txt
     // outils pour simplifier l'analyse syntaxique
