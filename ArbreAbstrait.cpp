@@ -254,9 +254,11 @@ int NoeudInstEcrire::executer() {
     return 0; // La valeur renvoyée ne représente rien !
 }
 
-void NoeudInstEcrire::traduitEnCPP(ostream& cout, unsigned int indentation) const {
-    for(Noeud noeud : m_chaineouexpr){
-    noeud.traduitEnCPP(cout,0);
+void NoeudInstEcrire::traduitEnCPP(ostream& cout, unsigned int indentation) const {   
+    for(Noeud* noeud : m_chaineouexpr){
+    cout << setw(4 * (indentation+2)) << "" << "cout << ";
+    noeud->traduitEnCPP(cout,0);
+    cout << ";" << endl;
     }
     
 }
@@ -284,5 +286,8 @@ int NoeudInstLire::executer() {
 }
 
 void NoeudInstLire::traduitEnCPP(ostream& cout, unsigned int indentation) const {
- cout << ((SymboleValue*)p)->getChaine();
+    for(auto p : m_variable){
+        cout << setw(4 * (indentation+2)) << "" << "cin >> ";
+        cout << ((SymboleValue*)p)->getChaine() << ";" << endl;
+    }
 }
